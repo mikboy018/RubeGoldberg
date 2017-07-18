@@ -10,28 +10,33 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
-    private float speed;
-    private float freq;
+    private int speed;
+    private int freq;
     private int objCount;
     private int score;
     private int tally;
+    private float conv = 100*1.35f;
+    public GameObject speedLever;
+    public GameObject freqLever;
     
     //Merry-Go-Round Speed
-    public float GetSpeed()
+    public int GetSpeed()
     {
         return speed;
     }
     public void SetSpeed()
     {
-        speed = GameObject.Find("SpeedAxle").GetComponent<Transform>().position.x*1.12f;
+        speed = -(-5 + Mathf.RoundToInt(speedLever.transform.rotation.z*conv));
+        //Debug.Log("Speed is changing!");
     }
     //Bat frequency
-    public float GetFreq()
+    public int GetFreq()
     {
         return freq;
     }public void SetFreq()
     {
-        freq = GameObject.Find("FreqAxle").GetComponent<Transform>().position.x * 1.12f;
+        freq = -(-5 + Mathf.RoundToInt(freqLever.transform.rotation.z*conv));
+        //Debug.Log("Freq is changing!");
     }
     //Count of total objects added by player
     public int GetObjCount()
