@@ -23,7 +23,7 @@ public class Counter : MonoBehaviour
     }
     public void SetSpeed()
     {
-        speed = GameObject.Find("GreenLever").GetComponent<Transform>().position.z*1.12f;
+        speed = GameObject.Find("SpeedAxle").GetComponent<Transform>().position.x*1.12f;
     }
     //Bat frequency
     public float GetFreq()
@@ -31,7 +31,7 @@ public class Counter : MonoBehaviour
         return freq;
     }public void SetFreq()
     {
-        freq = GameObject.Find("BlueLever").GetComponent<Transform>().position.z * 1.12f;
+        freq = GameObject.Find("FreqAxle").GetComponent<Transform>().position.x * 1.12f;
     }
     //Count of total objects added by player
     public int GetObjCount()
