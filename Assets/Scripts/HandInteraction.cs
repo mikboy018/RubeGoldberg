@@ -80,7 +80,7 @@ public class HandInteraction : MonoBehaviour
 
     private void OnGripStay(Collider col)
     {
-        if (col.gameObject.CompareTag("Throwable"))
+        if (col.gameObject.CompareTag("Throttle"))
         {
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {

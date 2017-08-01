@@ -12,7 +12,7 @@ public class HandControllerInput : MonoBehaviour
     public Vector3 teleportLocation;
     public GameObject player;
     public LayerMask laserMask; //helps to determine WHERE you can teleport
-    public float yNudgeAmount = 1f; //specific to teleportAimerObject height
+    public float yNudgeAmount = 3f; //specific to teleportAimerObject height
 
     //Dash
     public float dashSpeed = 0.1f;
@@ -37,13 +37,13 @@ public class HandControllerInput : MonoBehaviour
     void Update()
     {
         device = SteamVR_Controller.Input((int)trackedObj.index);
-        if (device.GetPress(SteamVR_Controller.ButtonMask.Grip) & !isDashing)
+        /* if (device.GetPress(SteamVR_Controller.ButtonMask.Grip) & !isDashing)
         {
             movementDirection = playerCam.transform.forward;
             movementDirection = new Vector3(movementDirection.x, 0, movementDirection.z);
             movementDirection = movementDirection * moveSpeed * Time.deltaTime;
             player.transform.position += movementDirection;
-        }
+        }*/
         if (isDashing)
         {
             //Lerp takes 2 values and smoothes them over time based on a float variable
@@ -73,9 +73,10 @@ public class HandControllerInput : MonoBehaviour
                 if (Physics.Raycast(transform.position, transform.forward, out hit, 15, laserMask))
                 {
                     teleportLocation = hit.point;
+                    teleportLocation.y = teleportLocation.y + yNudgeAmount;
                     laser.SetPosition(1, teleportLocation);
                     //aimer position
-                    teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y + yNudgeAmount, teleportLocation.z);
+                    teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y-yNudgeAmount, teleportLocation.z);
                 }
                 else
                 {
@@ -83,10 +84,10 @@ public class HandControllerInput : MonoBehaviour
                     RaycastHit groundRay;
                     if (Physics.Raycast(teleportLocation, -Vector3.up, out groundRay, 17, laserMask))
                     {
-                        teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y, transform.forward.z * 15 + transform.position.z);
+                        teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y + yNudgeAmount, transform.forward.z * 15 + transform.position.z);
                     }
                     laser.SetPosition(1, transform.forward * 15 + transform.position);
-                    teleportAimerObject.transform.position = teleportLocation + new Vector3(0, yNudgeAmount, 0);
+                    teleportAimerObject.transform.position = teleportLocation + new Vector3(0, -yNudgeAmount, 0);
                 }
             }
             //if releasing button
