@@ -76,11 +76,12 @@ public class HandInteraction : MonoBehaviour
             nextLevel();
             Debug.Log("Next level!");
         }*/
+        
     }
 
     private void OnGripStay(Collider col)
     {
-        if (col.gameObject.CompareTag("Throttle"))
+        if (col.gameObject.CompareTag("Throwable"))
         {
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
@@ -89,6 +90,19 @@ public class HandInteraction : MonoBehaviour
             else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
                 GrabObject(col);
+            }
+        }
+        if (col.gameObject.CompareTag("Throttle"))
+        {
+            if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+            {
+                //release throttle
+                ReleaseThrottle(col);
+            }
+            if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+            {
+                //grab throttle and allow movement
+                GrabThrottle(col);
             }
         }
     }
@@ -102,6 +116,14 @@ public class HandInteraction : MonoBehaviour
         device.TriggerHapticPulse(2000);
         Debug.Log("Object grabbed!");
     }
+    void GrabThrottle(Collider coli)
+    {
+        coli.transform.SetParent(gameObject.transform);
+        coli.GetComponent<Rigidbody>().isKinematic = false;
+        device.TriggerHapticPulse(2000);
+        Debug.Log("Grabbed throttle!");
+    }
+
     void ThrowObject(Collider coli)
     {
         //unparent controller
@@ -113,6 +135,15 @@ public class HandInteraction : MonoBehaviour
         rb.velocity = device.velocity * throwForce;
         rb.angularVelocity = device.angularVelocity;
         Debug.Log("Object thrown!");
+    }
+
+    void ReleaseThrottle(Collider coli)
+    {
+        coli.transform.SetParent(null);
+        Rigidbody rb = coli.GetComponent<Rigidbody>();
+        //turn on physics
+        rb.isKinematic = true;
+        Debug.Log("Throttle released!");
     }
 
     public void SwipeLeft()
@@ -134,5 +165,7 @@ public class HandInteraction : MonoBehaviour
     {
         objectMenuManager.SwitchLevel();
     }
+
+    
 }
     

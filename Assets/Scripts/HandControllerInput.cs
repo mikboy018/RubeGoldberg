@@ -49,13 +49,13 @@ public class HandControllerInput : MonoBehaviour
             //Lerp takes 2 values and smoothes them over time based on a float variable
             lerpTime += 1 * dashSpeed;
             player.transform.position = Vector3.Lerp(dashStartPosition, teleportLocation, lerpTime);
-            Debug.Log("dash!");
+            //Debug.Log("dash!");
             if (lerpTime >= 1)
             {
-                Debug.Log("lerp time was " + lerpTime);
+                //Debug.Log("lerp time was " + lerpTime);
                 isDashing = false;
                 lerpTime = 0;
-                Debug.Log("lerp time is " + lerpTime);
+                //Debug.Log("lerp time is " + lerpTime);
             }
         }
         if (!isDashing)
@@ -65,7 +65,7 @@ public class HandControllerInput : MonoBehaviour
             //if holding button down -- can replace with touchpad
             if (device.GetPress(SteamVR_Controller.ButtonMask.Trigger))
             {
-                Debug.Log("trigger pressed");
+                //Debug.Log("trigger pressed");
                 laser.gameObject.SetActive(true);
                 teleportAimerObject.SetActive(true);
                 laser.SetPosition(0, gameObject.transform.position);
@@ -74,9 +74,10 @@ public class HandControllerInput : MonoBehaviour
                 {
                     teleportLocation = hit.point;
                     teleportLocation.y = teleportLocation.y + yNudgeAmount;
-                    laser.SetPosition(1, teleportLocation);
+                    //laser.SetPosition(1, teleportLocation);
                     //aimer position
                     teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y-yNudgeAmount, teleportLocation.z);
+                    laser.SetPosition(1, teleportAimerObject.transform.position);
                 }
                 else
                 {
@@ -86,8 +87,9 @@ public class HandControllerInput : MonoBehaviour
                     {
                         teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y + yNudgeAmount, transform.forward.z * 15 + transform.position.z);
                     }
-                    laser.SetPosition(1, transform.forward * 15 + transform.position);
+                    //laser.SetPosition(1, transform.forward * 15 + transform.position);
                     teleportAimerObject.transform.position = teleportLocation + new Vector3(0, -yNudgeAmount, 0);
+                    laser.SetPosition(1, teleportAimerObject.transform.position);
                 }
             }
             //if releasing button

@@ -19,7 +19,7 @@ public class SignPostText : MonoBehaviour
         scoreMsg = GetComponent<Text>();
         scoreMsg.text = "Merry-Go-Round Speed: " + rotateSpeed + "%\nBat Frequency: " + batFreq + "%\nYou've placed " + 
             objCounter + " objects\nin the scene.\nYouv'e scored " + scoreCount + " times";
-        Debug.Log("Speed - " + rotateSpeed + " Freq - " + batFreq);
+        //Debug.Log("Speed - " + rotateSpeed + " Freq - " + batFreq);
     }
 
     public void OnSignClick()
