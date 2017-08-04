@@ -39,8 +39,11 @@ public class ObjectMenuManager : MonoBehaviour {
     }
     public void SpawnCurrentObject()
     {
-        Instantiate(objectPrefabList[currentObject], objectList[currentObject].transform.position, objectList[currentObject].transform.rotation);
-        
+        if (currentObject < 5)
+        {
+            var newObject = Instantiate(objectPrefabList[currentObject], objectList[currentObject].transform.position, objectList[currentObject].transform.rotation);
+            newObject.gameObject.tag = "Movable";
+        }
     }
     public void SwitchLevel()
     {

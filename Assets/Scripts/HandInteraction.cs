@@ -7,6 +7,7 @@ public class HandInteraction : MonoBehaviour
     public SteamVR_TrackedObject trackedObj;
     private SteamVR_Controller.Device device;
     public float throwForce = 1.5f;
+    public bool colliding = false;
 
     //Swipe
     public float swipeSum;
@@ -79,8 +80,10 @@ public class HandInteraction : MonoBehaviour
         
     }
 
-    private void OnGripStay(Collider col)
+    private void OnTriggerStay(Collider col)
     {
+        colliding = true;
+        //Debug.Log("collision!");
         if (col.gameObject.CompareTag("Throwable"))
         {
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
@@ -97,7 +100,7 @@ public class HandInteraction : MonoBehaviour
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
                 //release throttle
-                ReleaseThrottle(col);
+                ReleaseObject(col);
             }
             if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
@@ -105,7 +108,28 @@ public class HandInteraction : MonoBehaviour
                 GrabThrottle(col);
             }
         }
+        if (col.gameObject.CompareTag("Movable"))
+        {
+            Debug.Log("Moving object");
+            if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+            {
+                ReleaseObject(col);
+            }
+            else if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+            {
+                GrabObject(col);
+            }
+        }
     }
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag("Throttle"))
+        {
+            //Debug.Log("early release!");
+            ReleaseObject(col);
+        }
+        colliding = false;
+    } 
     void GrabObject(Collider coli)
     {
         //make controller its parent
@@ -114,14 +138,15 @@ public class HandInteraction : MonoBehaviour
         coli.GetComponent<Rigidbody>().isKinematic = true;
         //vibrate controller
         device.TriggerHapticPulse(2000);
-        Debug.Log("Object grabbed!");
+        //Debug.Log("Object grabbed!");
     }
     void GrabThrottle(Collider coli)
     {
         coli.transform.SetParent(gameObject.transform);
         coli.GetComponent<Rigidbody>().isKinematic = false;
+        
         device.TriggerHapticPulse(2000);
-        Debug.Log("Grabbed throttle!");
+        //Debug.Log("Grabbed throttle!");
     }
 
     void ThrowObject(Collider coli)
@@ -134,27 +159,28 @@ public class HandInteraction : MonoBehaviour
         //set velocity based on controller movement
         rb.velocity = device.velocity * throwForce;
         rb.angularVelocity = device.angularVelocity;
+        rb.useGravity = true;
         Debug.Log("Object thrown!");
     }
 
-    void ReleaseThrottle(Collider coli)
+    void ReleaseObject(Collider coli)
     {
         coli.transform.SetParent(null);
         Rigidbody rb = coli.GetComponent<Rigidbody>();
         //turn on physics
         rb.isKinematic = true;
-        Debug.Log("Throttle released!");
+        //Debug.Log("Throttle released!");
     }
 
     public void SwipeLeft()
     {
         objectMenuManager.MenuLeft();
-        Debug.Log("Swiped left!");
+        //Debug.Log("Swiped left!");
     }
     public void SwipeRight()
     {
         objectMenuManager.MenuRight();
-        Debug.Log("Swiped right!");
+        //Debug.Log("Swiped right!");
     }
 
     void SpawnObject()
