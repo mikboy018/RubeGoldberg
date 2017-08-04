@@ -21,8 +21,16 @@ public class BallLogic : MonoBehaviour {
             ballMovement.position = initialPosition.position;
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
             this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(initialPosition.position.x, initialPosition.position.y, initialPosition.position.z);
+            this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
                 
         }
 	}
+
+    private void OnTriggerEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Movable"))
+        {
+            Debug.Log("The ball hit the movable object!");
+        }
+    }
 }
