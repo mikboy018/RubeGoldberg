@@ -26,11 +26,25 @@ public class BallLogic : MonoBehaviour {
         }
 	}
 
-    private void OnTriggerEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Movable"))
+        if (other.gameObject.CompareTag("Movable"))
         {
-            Debug.Log("The ball hit the movable object!");
+            Debug.Log("collision!" + other.name);
+            other.GetComponent<CapsuleCollider>().enabled = false;
+            other.GetComponent<MeshCollider>().enabled = true;
+            this.gameObject.GetComponent<Collider>().isTrigger = false;
+        
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Movable"))
+        {
+            //other.gameObject.GetComponent<Collider>().isTrigger = true;
+            other.GetComponent<CapsuleCollider>().enabled = true;
+            other.GetComponent<MeshCollider>().enabled = false;
+            this.gameObject.GetComponent<Collider>().isTrigger = true;
         }
     }
 }
