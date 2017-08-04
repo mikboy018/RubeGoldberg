@@ -110,7 +110,7 @@ public class HandInteraction : MonoBehaviour
         }
         if (col.gameObject.CompareTag("Movable"))
         {
-            Debug.Log("Moving object");
+            //Debug.Log("Moving object");
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
                 ReleaseObject(col);

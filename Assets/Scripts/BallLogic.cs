@@ -25,7 +25,7 @@ public class BallLogic : MonoBehaviour {
                 
         }
 	}
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Movable"))
@@ -46,5 +46,41 @@ public class BallLogic : MonoBehaviour {
             other.GetComponent<MeshCollider>().enabled = false;
             this.gameObject.GetComponent<Collider>().isTrigger = true;
         }
+    }*/
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("Movable"))
+        {
+            other.GetComponent<CapsuleCollider>().enabled = false;
+            Debug.Log("changing tag");
+            EnableMesh(other);
+        }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("PuzzleObject"))
+        {
+            other.GetComponent<MeshCollider>().enabled = false;
+            Debug.Log("changing tag back");
+            DisableMesh(other);
+        }
+    }
+
+    public void EnableMesh(Collider other)
+    {
+        other.gameObject.tag = "PuzzleObject";
+        other.GetComponent<MeshCollider>().enabled = true;
+        Debug.Log("Object Tag Changed to PuzzleObject");
+    }
+
+    public void DisableMesh(Collider other)
+    {
+        other.gameObject.tag = "Movable";
+        other.GetComponent<CapsuleCollider>().enabled = true;
+        Debug.Log("Object Tag Changed to Movable");
+    }
+
+
 }
