@@ -156,11 +156,12 @@ public class HandInteraction : MonoBehaviour
         Rigidbody rb = coli.GetComponent<Rigidbody>();
         //turn on physics
         rb.isKinematic = false;
+        coli.GetComponent<Collider>().isTrigger = false;
         //set velocity based on controller movement
         rb.velocity = device.velocity * throwForce;
         rb.angularVelocity = device.angularVelocity;
         rb.useGravity = true;
-        Debug.Log("Object thrown!");
+        //Debug.Log("Object thrown!");
     }
 
     void ReleaseObject(Collider coli)

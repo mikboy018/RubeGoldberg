@@ -47,6 +47,8 @@ public class BallLogic : MonoBehaviour {
             this.gameObject.GetComponent<Collider>().isTrigger = true;
         }
     }*/
+
+    /*
     private void OnTriggerEnter(Collider other)
     {
         
@@ -81,6 +83,28 @@ public class BallLogic : MonoBehaviour {
         other.GetComponent<CapsuleCollider>().enabled = true;
         Debug.Log("Object Tag Changed to Movable");
     }
+    */
+        private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("collision enter with " + collision.gameObject.name);
+        if (collision.gameObject.CompareTag("Movable"))
+        {
+            
+            this.gameObject.GetComponent<SphereCollider>().isTrigger = false;
+        }
+        if (collision.gameObject.CompareTag("laserMask"))
+        {
+            this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+        }
+    }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Movable"))
+        {
+            Debug.Log("collision exit with " + collision.gameObject.name);
+            //this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
+        }
+    }
 }

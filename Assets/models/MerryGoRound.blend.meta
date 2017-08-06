@@ -27,6 +27,10 @@ ModelImporter:
     4300002: Cylinder
     4300004: Circle
     4300006: Cube_001
+    6400000: Circle
+    6400002: Cube
+    6400004: Cube_001
+    6400006: Cylinder
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -55,7 +59,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
