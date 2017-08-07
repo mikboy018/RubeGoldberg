@@ -22,6 +22,9 @@ ModelImporter:
     4300000: BezierCurve
     4300002: BezierCircle
     4300004: Cube
+    6400000: BezierCircle
+    6400002: BezierCurve
+    6400004: Cube
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -50,7 +53,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
