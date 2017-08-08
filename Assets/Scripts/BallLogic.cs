@@ -6,6 +6,8 @@ public class BallLogic : MonoBehaviour {
     public Transform ballMovement;
     private static Transform initialPosition;
     public GameObject startPos;
+    public GameObject logic;
+
 	// Use this for initialization
 	void Start () {
         ballMovement = this.gameObject.transform;
@@ -15,14 +17,15 @@ public class BallLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(ballMovement.position.y < -3.16f)
+		if(ballMovement.position.y < -2.9f)
         {
             //reset initial position and motion -- use RigidBody instead!
             ballMovement.position = initialPosition.position;
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
             this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-                
+            GetComponent<ObjectMenuManager>().resetTally();
+            Debug.Log("Tally is " + GetComponent<ObjectMenuManager>().tally);
         }
 	}
     /*
@@ -89,8 +92,10 @@ public class BallLogic : MonoBehaviour {
         Debug.Log("collision enter with " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Movable"))
         {
-            
+            collision.gameObject.GetComponent<ObjectUsed>().used = true;
             this.gameObject.GetComponent<SphereCollider>().isTrigger = false;
+            //logic.GetComponent<Counter>().SetTally(1);
+            Debug.Log("Tally is now - " + GetComponent<ObjectMenuManager>().tally);
         }
         if (collision.gameObject.CompareTag("laserMask"))
         {
@@ -104,7 +109,7 @@ public class BallLogic : MonoBehaviour {
         {
             Debug.Log("collision exit with " + collision.gameObject.name);
             //this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
-
+            
         }
     }
 }

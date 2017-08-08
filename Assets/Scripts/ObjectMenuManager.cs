@@ -6,6 +6,8 @@ public class ObjectMenuManager : MonoBehaviour {
     public List<GameObject> objectList; //handled automatically at start
     public List<GameObject> objectPrefabList; //set manually in inspect, must match order of scene menu objects
     public SteamVR_LoadLevel loadLevel;
+    public GameObject logic;
+    public int[] tally;
 
     public int currentObject = 0;
 
@@ -43,15 +45,26 @@ public class ObjectMenuManager : MonoBehaviour {
         {
             var newObject = Instantiate(objectPrefabList[currentObject], objectList[currentObject].transform.position, objectList[currentObject].transform.rotation);
             newObject.gameObject.tag = "Movable";
+            logic.GetComponent<Counter>().SetObjCount(1);
         }
     }
     public void SwitchLevel()
     {
         loadLevel.Trigger();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    /*
+    public void incrementTally()
+    {
+        tally = tally + 1;
+    }
+
+    public void resetTally()
+    {
+        tally = 0;
+    }*/
+
+    // Update is called once per frame
+    void Update() {
+        
+    }
 }

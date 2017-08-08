@@ -8,6 +8,7 @@ public class HandInteraction : MonoBehaviour
     private SteamVR_Controller.Device device;
     public float throwForce = 1.5f;
     public bool colliding = false;
+    public GameObject logic;
 
     //Swipe
     public float swipeSum;
@@ -171,6 +172,7 @@ public class HandInteraction : MonoBehaviour
         //turn on physics
         rb.isKinematic = true;
         //Debug.Log("Throttle released!");
+      
     }
 
     public void SwipeLeft()

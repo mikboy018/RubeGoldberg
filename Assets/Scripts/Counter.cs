@@ -56,15 +56,7 @@ public class Counter : MonoBehaviour
     {
         score = score + win;
     }
-    //Count of Collectibles captured
-    public int GetTally()
-    {
-        return tally;
-    }
-    public void setTally(int newObj)
-    {
-        tally = tally + newObj;
-    }
+    
 
 
     
