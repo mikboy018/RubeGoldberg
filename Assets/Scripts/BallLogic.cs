@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class BallLogic : MonoBehaviour {
     public Transform ballMovement;
@@ -10,6 +10,7 @@ public class BallLogic : MonoBehaviour {
     public GameObject logic;
     public GameObject poof;
     public GameObject stars;
+    public GameObject goal;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,6 @@ public class BallLogic : MonoBehaviour {
 	void Update () {
 		if(ballMovement.position.y < 0f)
         {
-            //reset initial position and motion -- use RigidBody instead!
             ballMovement.position = initialPosition.position;
             GameObject poofObj = Object.Instantiate(poof, ballMovement);
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
@@ -36,13 +36,13 @@ public class BallLogic : MonoBehaviour {
 
         private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collision enter with " + collision.gameObject.name);
+        //Debug.Log("collision enter with " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Movable"))
         {
             collision.gameObject.GetComponent<ObjectUsed>().used = true;
             this.gameObject.GetComponent<SphereCollider>().isTrigger = false;
             logic.GetComponent<Counter>().SetTally(1);
-            Debug.Log("Tally is " + logic.GetComponent<Counter>().GetTally());
+            //Debug.Log("Tally is " + logic.GetComponent<Counter>().GetTally());
         }
         if (collision.gameObject.CompareTag("laserMask"))
         {
@@ -50,22 +50,13 @@ public class BallLogic : MonoBehaviour {
         }
         if (collision.gameObject.tag == "Goal")
         {
-            Debug.Log("Ball hit goal");
+            //Debug.Log("Ball hit goal");
             if (logic.GetComponent<Counter>().GetScore() >= 2)
             {
-                Debug.Log("Score is good enough!");
-                SceneManager.LoadScene("LevelOne");
+                //Debug.Log("Score is good enough!");
+                //SceneManager.LoadScene("LevelOne");
+                goal.GetComponent<SteamVR_LoadLevel>().Trigger();
             }
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Movable"))
-        {
-            Debug.Log("collision exit with " + collision.gameObject.name);
-            //this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
-            
         }
     }
 
