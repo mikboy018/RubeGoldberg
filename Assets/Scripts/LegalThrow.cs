@@ -14,11 +14,11 @@ public class LegalThrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collided with: " + other.gameObject.name);
+        //Debug.Log("Collided with: " + other.gameObject.name);
         if (other.gameObject.CompareTag("ThrowBoundary"))
         {
             legal = true;
-            Debug.Log("You may now throw the ball to start the game!");
+            //Debug.Log("You may now throw the ball to start the game!");
         }
     }
 
@@ -27,7 +27,7 @@ public class LegalThrow : MonoBehaviour
         if (other.gameObject.CompareTag("ThrowBoundary"))
         {
             legal = false;
-            Debug.Log("Throwing now causes reset");
+            //Debug.Log("Throwing now causes reset");
         }
     }
 
