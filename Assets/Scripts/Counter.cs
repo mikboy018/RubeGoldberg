@@ -52,9 +52,14 @@ public class Counter : MonoBehaviour
     {
         return score;
     }
-    public void SetScore(int win)
+    public void SetScore(int collected)
     {
-        score = score + win;
+        score = score + collected;
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
     }
 
     public int GetTally()

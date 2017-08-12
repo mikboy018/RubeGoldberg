@@ -7,6 +7,8 @@ public class BallLogic : MonoBehaviour {
     private static Transform initialPosition;
     public GameObject startPos;
     public GameObject logic;
+    public GameObject poof;
+    public GameObject stars;
 
 	// Use this for initialization
 	void Start () {
@@ -17,76 +19,20 @@ public class BallLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(ballMovement.position.y < -2.9f)
+		if(ballMovement.position.y < 0f)
         {
             //reset initial position and motion -- use RigidBody instead!
             ballMovement.position = initialPosition.position;
+            GameObject poofObj = Object.Instantiate(poof, ballMovement);
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
             this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
             logic.GetComponent<Counter>().ResetTally();
-            Debug.Log("Tally is " + logic.GetComponent<Counter>().GetTally());
+            logic.GetComponent<Counter>().ResetScore();
+            stars.GetComponent<ToggleChildren>().Reactivate();
         }
 	}
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Movable"))
-        {
-            Debug.Log("collision!" + other.name);
-            other.GetComponent<CapsuleCollider>().enabled = false;
-            other.GetComponent<MeshCollider>().enabled = true;
-            this.gameObject.GetComponent<Collider>().isTrigger = false;
-        
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Movable"))
-        {
-            //other.gameObject.GetComponent<Collider>().isTrigger = true;
-            other.GetComponent<CapsuleCollider>().enabled = true;
-            other.GetComponent<MeshCollider>().enabled = false;
-            this.gameObject.GetComponent<Collider>().isTrigger = true;
-        }
-    }*/
 
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.gameObject.CompareTag("Movable"))
-        {
-            other.GetComponent<CapsuleCollider>().enabled = false;
-            Debug.Log("changing tag");
-            EnableMesh(other);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        
-        if (other.gameObject.CompareTag("PuzzleObject"))
-        {
-            other.GetComponent<MeshCollider>().enabled = false;
-            Debug.Log("changing tag back");
-            DisableMesh(other);
-        }
-    }
-
-    public void EnableMesh(Collider other)
-    {
-        other.gameObject.tag = "PuzzleObject";
-        other.GetComponent<MeshCollider>().enabled = true;
-        Debug.Log("Object Tag Changed to PuzzleObject");
-    }
-
-    public void DisableMesh(Collider other)
-    {
-        other.gameObject.tag = "Movable";
-        other.GetComponent<CapsuleCollider>().enabled = true;
-        Debug.Log("Object Tag Changed to Movable");
-    }
-    */
         private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision enter with " + collision.gameObject.name);
@@ -112,4 +58,6 @@ public class BallLogic : MonoBehaviour {
             
         }
     }
+
+    
 }
