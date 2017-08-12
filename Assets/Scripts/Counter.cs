@@ -56,7 +56,23 @@ public class Counter : MonoBehaviour
     {
         score = score + win;
     }
-    
+
+    public int GetTally()
+    {
+        return tally;
+    }
+
+    public void SetTally(int collide)
+    {
+        tally = tally + collide;
+    }
+
+    public void ResetTally()
+    {
+        tally = 0;
+    }
+
+
 
 
     

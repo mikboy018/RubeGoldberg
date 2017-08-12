@@ -9,6 +9,7 @@ public class HandInteraction : MonoBehaviour
     public float throwForce = 1.5f;
     public bool colliding = false;
     public GameObject logic;
+    public GameObject player;
 
     //Swipe
     public float swipeSum;
@@ -18,6 +19,7 @@ public class HandInteraction : MonoBehaviour
     public bool hasSwipedLeft;
     public bool hasSwipedRight;
     public ObjectMenuManager objectMenuManager;
+    public bool legalThrow;
 
     // Use this for initialization
     void Start()
@@ -130,7 +132,10 @@ public class HandInteraction : MonoBehaviour
             ReleaseObject(col);
         }
         colliding = false;
-    } 
+    }
+
+    
+
     void GrabObject(Collider coli)
     {
         //make controller its parent
@@ -152,17 +157,21 @@ public class HandInteraction : MonoBehaviour
 
     void ThrowObject(Collider coli)
     {
-        //unparent controller
-        coli.transform.SetParent(null);
-        Rigidbody rb = coli.GetComponent<Rigidbody>();
-        //turn on physics
-        rb.isKinematic = false;
-        coli.GetComponent<Collider>().isTrigger = false;
-        //set velocity based on controller movement
-        rb.velocity = device.velocity * throwForce;
-        rb.angularVelocity = device.angularVelocity;
-        rb.useGravity = true;
-        //Debug.Log("Object thrown!");
+
+        if (player.GetComponent<LegalThrow>().GetLegal() == true)
+        {
+            //unparent controller
+            coli.transform.SetParent(null);
+            Rigidbody rb = coli.GetComponent<Rigidbody>();
+            //turn on physics
+            rb.isKinematic = false;
+            coli.GetComponent<Collider>().isTrigger = false;
+            //set velocity based on controller movement
+            rb.velocity = device.velocity * throwForce;
+            rb.angularVelocity = device.angularVelocity;
+            rb.useGravity = true;
+            //Debug.Log("Object thrown!");
+        }
     }
 
     void ReleaseObject(Collider coli)

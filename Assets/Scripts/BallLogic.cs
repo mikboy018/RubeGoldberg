@@ -24,8 +24,8 @@ public class BallLogic : MonoBehaviour {
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
             this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-            GetComponent<ObjectMenuManager>().resetTally();
-            Debug.Log("Tally is " + GetComponent<ObjectMenuManager>().tally);
+            logic.GetComponent<Counter>().ResetTally();
+            Debug.Log("Tally is " + logic.GetComponent<Counter>().GetTally());
         }
 	}
     /*
@@ -94,8 +94,8 @@ public class BallLogic : MonoBehaviour {
         {
             collision.gameObject.GetComponent<ObjectUsed>().used = true;
             this.gameObject.GetComponent<SphereCollider>().isTrigger = false;
-            //logic.GetComponent<Counter>().SetTally(1);
-            Debug.Log("Tally is now - " + GetComponent<ObjectMenuManager>().tally);
+            logic.GetComponent<Counter>().SetTally(1);
+            Debug.Log("Tally is " + logic.GetComponent<Counter>().GetTally());
         }
         if (collision.gameObject.CompareTag("laserMask"))
         {

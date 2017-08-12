@@ -7,7 +7,7 @@ public class ObjectMenuManager : MonoBehaviour {
     public List<GameObject> objectPrefabList; //set manually in inspect, must match order of scene menu objects
     public SteamVR_LoadLevel loadLevel;
     public GameObject logic;
-    public int[] tally;
+    //public int[] tally;
 
     public int currentObject = 0;
 
