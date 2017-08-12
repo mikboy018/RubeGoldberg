@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallLogic : MonoBehaviour {
     public Transform ballMovement;
@@ -46,6 +47,15 @@ public class BallLogic : MonoBehaviour {
         if (collision.gameObject.CompareTag("laserMask"))
         {
             this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+        }
+        if (collision.gameObject.tag == "Goal")
+        {
+            Debug.Log("Ball hit goal");
+            if (logic.GetComponent<Counter>().GetScore() >= 2)
+            {
+                Debug.Log("Score is good enough!");
+                SceneManager.LoadScene("LevelOne");
+            }
         }
     }
 
