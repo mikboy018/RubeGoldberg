@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BallLogic : MonoBehaviour {
     public Transform ballMovement;
-    private static Transform initialPosition;
     public GameObject startPos;
+    private Transform initialPosition;
     public GameObject logic;
     public GameObject poof;
     public GameObject stars;
@@ -24,7 +24,8 @@ public class BallLogic : MonoBehaviour {
 		if(ballMovement.position.y < 0f)
         {
             ballMovement.position = initialPosition.position;
-            GameObject poofObj = Object.Instantiate(poof, ballMovement);
+            //Debug.Log("Transform start pos = " + startPos.transform);
+            Object.Instantiate(poof);
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
             this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
