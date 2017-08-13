@@ -5,13 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class StartLevel : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public GameObject nextLevel;
+    public SteamVR_TrackedObject trackedObj1;
+    public SteamVR_TrackedObject trackedObj2;
+    public SteamVR_Controller.Device device1;
+    public SteamVR_Controller.Device device2;
+
+
+    private void Update()
+    {
+        device1 = SteamVR_Controller.Input((int)trackedObj1.index);
+        device2 = SteamVR_Controller.Input((int)trackedObj2.index);
+        if (device1.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) || device1.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+        {
+            nextLevel.GetComponent<SteamVR_LoadLevel>().Trigger();
+        }
+    }
+
 }
