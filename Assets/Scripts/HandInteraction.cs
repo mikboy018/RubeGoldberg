@@ -184,6 +184,7 @@ public class HandInteraction : MonoBehaviour
       
     }
 
+
     public void SwipeLeft()
     {
         objectMenuManager.MenuLeft();

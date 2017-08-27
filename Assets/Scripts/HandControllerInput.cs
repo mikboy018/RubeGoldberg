@@ -13,15 +13,18 @@ public class HandControllerInput : MonoBehaviour
     public GameObject player;
     public GameObject floor;
     public LayerMask laserMask; //helps to determine WHERE you can teleport
+    public LayerMask WallMask;
     public float yNudgeAmount = 3f; //specific to teleportAimerObject height
     public float xBumpAmount = 3f;
     public float zBumpAmount = 3f;
+    public GameObject ball;
 
     //Dash
     public float dashSpeed = 0.1f;
     private bool isDashing;
     private float lerpTime;
     private Vector3 dashStartPosition;
+    private Vector3 currentPosition;
 
     //
     public Transform playerCam;
@@ -64,7 +67,7 @@ public class HandControllerInput : MonoBehaviour
         if (!isDashing)
         {
 
-
+            currentPosition = player.transform.position;
             //if holding button down -- can replace with touchpad
             if (device.GetPress(SteamVR_Controller.ButtonMask.Trigger))
             {
@@ -81,26 +84,17 @@ public class HandControllerInput : MonoBehaviour
                     //aimer position
                     teleportAimerObject.transform.position = new Vector3(teleportLocation.x, teleportLocation.y - yNudgeAmount, teleportLocation.z);
                     laser.SetPosition(1, teleportAimerObject.transform.position);
-                    if (hit.collider.gameObject.name == "NorthWall")
+                    /*if (hit.collider.gameObject.layer == WallMask)
                     {
-                        Debug.Log("North wall hit");
-                        teleportLocation = new Vector3(hit.point.x, floor.transform.position.y + yNudgeAmount, hit.point.z - zBumpAmount);
-                    }
-                    if (hit.collider.gameObject.name == "SouthWall")
+                        Debug.Log("Not moving");
+                        teleportLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                    }*/
+                    if (hit.collider.gameObject.tag == "Barrier")
                     {
-                        Debug.Log("South wall hit");
-                        teleportLocation = new Vector3(hit.point.x, floor.transform.position.y + yNudgeAmount, hit.point.z + zBumpAmount);
+                        Debug.Log("Not moving - hit nothing");
+                        teleportLocation = currentPosition;
                     }
-                    if (hit.collider.gameObject.name == "EastWall")
-                    {
-                        Debug.Log("East wall hit");
-                        teleportLocation = new Vector3(hit.point.x - xBumpAmount, floor.transform.position.y + yNudgeAmount, hit.point.z);
-                    }
-                    if (hit.collider.gameObject.name == "WestWall")
-                    {
-                        Debug.Log("West wall hit");
-                        teleportLocation = new Vector3(hit.point.x + xBumpAmount, floor.transform.position.y + yNudgeAmount, hit.point.z);
-                    }
+
                 }
                 else
                 {
@@ -110,6 +104,7 @@ public class HandControllerInput : MonoBehaviour
                     {
                         teleportLocation = new Vector3(transform.forward.x * 15 + transform.position.x, groundRay.point.y + yNudgeAmount, transform.forward.z * 15 + transform.position.z);
                     }
+                    
                     //laser.SetPosition(1, transform.forward * 15 + transform.position);
                     teleportAimerObject.transform.position = teleportLocation + new Vector3(0, -yNudgeAmount, 0);
                     laser.SetPosition(1, teleportAimerObject.transform.position);
@@ -123,6 +118,7 @@ public class HandControllerInput : MonoBehaviour
                 //player.transform.position = teleportLocation;
                 dashStartPosition = player.transform.position;
                 isDashing = true;
+                
             }
         }
     }
